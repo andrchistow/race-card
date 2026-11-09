@@ -25,25 +25,46 @@
   .gifts { color: #fff; font-weight: 800; font-size: 20px; background: rgba(0,0,0,.3); padding: 4px 12px; border-radius: 99px; }
 
   /* стартовое окно и окно с поздравлением */
-  .overlay { position: fixed; inset: 0; z-index: 10; display: flex; align-items: center; justify-content: center; background: rgba(43,16,85,.55); transition: opacity .4s; padding: 20px; }
+  .overlay { position: fixed; inset: 0; z-index: 10; display: flex; align-items: center; justify-content: center; background: rgba(43,16,85,.65); transition: opacity .4s; padding: 14px; overflow-y: auto; }
   .overlay.hide { opacity: 0; pointer-events: none; }
-  .panel { background: var(--paper); color: var(--ink); border-radius: 18px; padding: 30px 26px; text-align: center; width: min(88vw, 380px);
-           display: flex; flex-direction: column; align-items: center; gap: 14px; box-shadow: 0 22px 40px rgba(0,0,0,.4);
-           border: 3px dashed #f2b8a2; outline: 10px solid var(--paper); outline-offset: -16px; }
-  .panel h2 { font-family: "Caveat", cursive; font-size: 44px; line-height: 1; color: var(--pop); }
-  .panel p { font-size: 17px; line-height: 1.45; max-width: 26ch; }
-  .btn { background: var(--pop); color: #fff; border: 0; border-radius: 99px; padding: 13px 30px; font: 800 18px "Nunito", sans-serif; cursor: pointer; box-shadow: 0 6px 0 #c42a52; }
-  .btn:active { transform: translateY(3px); box-shadow: 0 3px 0 #c42a52; }
+  .panel { background: var(--paper); color: var(--ink); border-radius: 18px; padding: 22px 20px; text-align: center; width: min(90vw, 380px); max-height: 94vh;
+           display: flex; flex-direction: column; align-items: center; gap: 10px; box-shadow: 0 22px 40px rgba(0,0,0,.4);
+           border: 3px dashed #f2b8a2; outline: 8px solid var(--paper); outline-offset: -12px; }
+  .panel h2 { font-family: "Caveat", cursive; font-size: 40px; line-height: 1; color: var(--pop); }
+  .panel p { font-size: 16px; line-height: 1.4; max-width: 28ch; }
+  .btn { background: var(--pop); color: #fff; border: 0; border-radius: 99px; padding: 12px 28px; font: 800 17px "Nunito", sans-serif; cursor: pointer; box-shadow: 0 5px 0 #c42a52; }
+  .btn:active { transform: translateY(3px); box-shadow: 0 2px 0 #c42a52; }
 
-  #card .panel { transform: rotate(-2deg) scale(.6); opacity: 0; }
+  #card .panel { transform: rotate(-3deg) scale(.5); opacity: 0; }
   #card.show .panel { animation: pop .8s cubic-bezier(.2,1.4,.4,1) forwards; }
   @keyframes pop { to { transform: rotate(-1deg) scale(1); opacity: 1; } }
-  #card .small { font-family: "Caveat", cursive; font-size: 28px; color: var(--pop); }
-  #card h1 { font-family: "Caveat", cursive; font-weight: 700; font-size: clamp(46px, 14vw, 64px); line-height: .95;
+  #card .small { font-family: "Caveat", cursive; font-size: 24px; color: var(--pop); }
+  #card h1 { font-family: "Caveat", cursive; font-weight: 700; font-size: clamp(34px, 9vw, 48px); line-height: .95;
              background: linear-gradient(90deg, #ff3d6e, #ff9a3d, #b24dff); -webkit-background-clip: text; background-clip: text; color: transparent; }
-  #card .sign { font-family: "Caveat", cursive; font-size: 30px; color: var(--pop); }
-  #card .score { font-size: 15px; opacity: .7; }
-  .btn.ghost { background: transparent; color: var(--ink); border: 2px solid #d9b9a8; box-shadow: none; padding: 8px 22px; font-size: 15px; }
+  #card .sign { font-family: "Caveat", cursive; font-size: 26px; color: var(--pop); }
+  #card .score { font-size: 14px; opacity: .75; font-weight: 700; }
+  .btn.ghost { background: transparent; color: var(--ink); border: 2px solid #d9b9a8; box-shadow: none; padding: 7px 20px; font-size: 14px; }
+
+  /* Рамка и парение картинки открытки */
+  .gift-art-box {
+    position: relative;
+    width: min(74vw, 250px);
+    border-radius: 14px;
+    padding: 5px;
+    background: linear-gradient(135deg, #ff3d6e, #ffc857, #ff3d6e);
+    box-shadow: 0 10px 24px rgba(255, 61, 110, 0.4);
+    animation: floatArt 3s ease-in-out infinite alternate;
+  }
+  @keyframes floatArt {
+    0% { transform: translateY(0px) rotate(-1deg); }
+    100% { transform: translateY(-6px) rotate(1.5deg); }
+  }
+  .gift-art-box img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+  }
 </style>
 </head>
 <body>
@@ -65,12 +86,18 @@
     </div>
   </div>
 
-  <!-- поздравление: ИМЯ, текст и подпись поменяй на свои -->
+  <!-- поздравление -->
   <div class="overlay hide" id="card">
     <div class="panel">
       <div class="small">ты доехала до финиша!</div>
+      
+      <!-- Картинка-открытка -->
+      <div class="gift-art-box">
+        <img src="card.jpg" alt="Открытка для Ани">
+      </div>
+
       <h1>С днём рождения, Аня!</h1>
-      <p>Ну шо, чемпионка, поздравляю тебя с 18-ти летием!!!).</p>
+      <p>Ну шо, чемпионка, поздравляю тебя с 18-ти летием!!!)</p>
       <div class="score" id="score"></div>
       <div class="sign">— от Андрушки</div>
       <button class="btn ghost" id="again">проехать ещё раз</button>
@@ -78,22 +105,21 @@
   </div>
 
 <script>
-/* ====== настройки, которые можно менять ====== */
-const TOTAL = 9500;        // длина дороги в пикселях (больше = дольше ехать)
-const SPEED = 380;         // крейсерская скорость, пикселей в секунду
+/* ====== настройки ====== */
+const TOTAL = 9500;        // длина дороги
+const SPEED = 380;         // крейсерская скорость
 const CAR_COLOR = '#ff3d6e';
 
-/* ====== физика (все числа в пикселях и секундах) ====== */
-const ACCEL = 240;         // как быстро машина разгоняется
-const DRAG = 600;          // как быстро скорость падает, если она выше нужной
-const FINISH_BRAKE = 260;  // торможение после финиша
-const STEER = 1500;        // сила руления (боковое ускорение)
-const LAT_DAMP = 5;        // боковое «трение»: чем больше, тем быстрее выпрямляется
-const MAX_VX = 320;        // потолок боковой скорости
-const GRASS_SLOW = 0.5;    // на траве скорость падает до (1 − это значение)
-const STEP = 1 / 120;      // шаг физики: считаем 120 раз в секунду на любом экране
+/* ====== сбалансированная физика ====== */
+const ACCEL = 240;
+const DRAG = 600;
+const FINISH_BRAKE = 260;
+const STEER = 1100;        // сбалансированная чувствительность руля
+const LAT_DAMP = 5.0;      // демпфирование заноса
+const MAX_VX = 275;        // лимит боковой скорости
+const GRASS_SLOW = 0.5;
+const STEP = 1 / 120;
 
-/* полифил для старых телефонов, где нет roundRect */
 if (!CanvasRenderingContext2D.prototype.roundRect) {
   CanvasRenderingContext2D.prototype.roundRect = function (x, y, w, h, r) {
     r = Math.min(r, w / 2, h / 2);
@@ -102,7 +128,6 @@ if (!CanvasRenderingContext2D.prototype.roundRect) {
   };
 }
 
-/* ====== холсты ====== */
 const cv = document.getElementById('game'), g = cv.getContext('2d');
 const fx = document.getElementById('fx'),   f = fx.getContext('2d');
 let W, H, dpr, roadW, roadL, carW, carH, carY, tile, treeSprites = [];
@@ -120,13 +145,10 @@ function resize() {
   buildSprites();
 }
 
-/* Фон готовим ОДИН раз: плитка травы с мягкой фактурой и спрайты деревьев.
-   Раньше всё рисовалось каждый кадр контрастными полосами, отсюда и мерцание. */
 function mulberry(a) { return () => { a |= 0; a = a + 0x6D2B79F5 | 0; let t = Math.imul(a ^ a >>> 15, 1 | a); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
 
 function buildSprites() {
   const rnd = mulberry(7);
-  // плитка травы (бесшовная: пятна дублируются по краям)
   tile = document.createElement('canvas'); tile.width = tile.height = TILE * dpr;
   const t = tile.getContext('2d'); t.scale(dpr, dpr);
   t.fillStyle = '#459f58'; t.fillRect(0, 0, TILE, TILE);
@@ -144,7 +166,6 @@ function buildSprites() {
       t.beginPath(); t.moveTo(x + dx, y + dy); t.lineTo(x + dx + (rnd() - .5) * 3, y + dy - 3 - rnd() * 3); t.stroke();
     }
   }
-  // деревья трёх размеров
   treeSprites = [15, 19, 24].map((r, k) => {
     const s = Math.ceil(r * 2 + 16), c = document.createElement('canvas');
     c.width = c.height = s * dpr; c.s = s;
@@ -157,10 +178,9 @@ function buildSprites() {
   });
 }
 
-/* ====== состояние ====== */
-let state = 'ready';   // ready → play → finishing → done
+let state = 'ready';
 let dist, v, cxo, vx, yaw, shakeT, gifts, objs, deco;
-let pDist, pX, pYaw;   // прошлое состояние для плавной интерполяции
+let pDist, pX, pYaw;
 let steer = 0, simTime = 0;
 const keys = {};
 const clamp = (a, lo, hi) => Math.max(lo, Math.min(hi, a));
@@ -175,7 +195,6 @@ function reset() {
     objs.push({ wy, xr: 0.12 + rnd() * 0.76, dx: 0, type: rnd() < 0.55 ? 'gift' : 'cone',
                 hit: false, vx: 0, vwy: 0, rot: 0, spin: 0, age: 0 });
   }
-  // деревья и цветы по обочинам (раз и навсегда, чтобы не «прыгали»)
   deco = [];
   for (let wy = 0; wy < TOTAL + 600; wy += 110) {
     deco.push({ k: 'tree', wy: wy + rnd() * 50, left: rnd() < .5, off: rnd(), s: (rnd() * 3) | 0 });
@@ -184,7 +203,7 @@ function reset() {
   }
 }
 
-/* ====== управление ====== */
+/* Управление */
 cv.addEventListener('pointerdown', e => { steer = e.clientX < W / 2 ? -1 : 1; cv.setPointerCapture(e.pointerId); });
 cv.addEventListener('pointermove', e => { if (e.buttons || e.pointerType === 'touch') steer = e.clientX < W / 2 ? -1 : 1; });
 cv.addEventListener('pointerup',     () => steer = 0);
@@ -198,44 +217,37 @@ function steerInput() {
   return s;
 }
 
-/* ====== ФИЗИКА: один шаг (вызывается 120 раз в секунду) ====== */
 function update(dt) {
   simTime += dt;
   const driving = state === 'play';
 
-  // 1) Где колёса: на дороге или на траве? grass = 0..1
   const over = Math.abs(cxo) + carW / 2 - roadW / 2;
   const grass = clamp(over / (carW * 0.7), 0, 1);
 
-  // 2) Скорость вперёд: плавно тянется к целевой (на траве цель ниже)
   const target = driving ? SPEED * (1 - GRASS_SLOW * grass) : 0;
   const rate = target > v ? ACCEL : (driving ? DRAG : FINISH_BRAKE);
   v += clamp(target - v, -rate * dt, rate * dt);
 
-  // 3) Руль: чем медленнее едем, тем хуже поворачиваем (стоя не рулится)
   const authority = clamp(v / 140, 0, 1);
   const s = driving ? steerInput() : 0;
   vx += s * STEER * authority * dt;
-  vx *= Math.exp(-(LAT_DAMP + 5 * grass) * dt);       // трение, на траве сильнее
+  vx *= Math.exp(-(LAT_DAMP + 5 * grass) * dt);
   vx = clamp(vx, -MAX_VX, MAX_VX);
   cxo += vx * dt;
 
-  // 4) Края экрана: упираемся и слегка отскакиваем
   const lim = W / 2 - carW / 2 - 4;
   if (Math.abs(cxo) > lim) { cxo = Math.sign(cxo) * lim; vx *= -0.25; }
 
-  // 5) Поворот кузова зависит от бокового сноса относительно скорости
   const yawTarget = clamp(vx / Math.max(v, 120) * 0.8, -0.35, 0.35);
   yaw += (yawTarget - yaw) * Math.min(1, dt * 10);
 
   dist += v * dt;
   if (shakeT > 0) shakeT -= dt;
 
-  // 6) Столкновения: кузов = три круга вдоль машины
   const cxs = W / 2 + cxo, br = carW * 0.45;
   const body = [carY - carH * 0.28, carY, carY + carH * 0.28];
   for (const o of objs) {
-    if (o.type === 'cone' && o.hit) {                  // сбитый конус летит по инерции
+    if (o.type === 'cone' && o.hit) {
       o.age += dt; const k = Math.exp(-1.6 * dt);
       o.dx += o.vx * dt; o.wy += o.vwy * dt; o.vx *= k; o.vwy *= k; o.rot += o.spin * dt; o.spin *= k;
       continue;
@@ -254,19 +266,17 @@ function update(dt) {
       burstAt(ox, sy, 22, 6, 2);
     } else {
       const dir = (ox - cxs) >= 0 ? 1 : -1;
-      o.vx = dir * (140 + Math.random() * 80) + vx * 0.4;   // конус отлетает вбок и вперёд
+      o.vx = dir * (140 + Math.random() * 80) + vx * 0.4;
       o.vwy = v * 1.15 + 80; o.spin = dir * (6 + Math.random() * 4);
-      v *= 0.62;                                             // удар сбрасывает скорость
-      vx -= dir * 70; shakeT = 0.3;                          // и чуть толкает машину
+      v *= 0.62;
+      vx -= dir * 70; shakeT = 0.3;
     }
   }
 
-  // 7) Финиш
   if (state === 'play' && dist >= TOTAL) state = 'finishing';
   if (state === 'finishing' && v < 4) finish();
 }
 
-/* ====== рисование ====== */
 function rr(x, y, w, h, r) { g.beginPath(); g.roundRect(x, y, w, h, r); g.fill(); }
 
 function drawCar(x, y, tilt) {
@@ -300,17 +310,14 @@ function drawGift(x, y) {
 }
 
 function render(alpha) {
-  // интерполяция между прошлым и текущим шагом физики: движение плавное на любой частоте экрана
   const d = pDist + (dist - pDist) * alpha;
   const cx = W / 2 + pX + (cxo - pX) * alpha;
   const ya = pYaw + (yaw - pYaw) * alpha;
 
-  // трава: плитка с мягкой фактурой, сдвигается на целое число пикселей
   g.fillStyle = '#459f58'; g.fillRect(0, 0, W, H);
   const oy = Math.round(d) % TILE;
   for (let y = oy - TILE; y < H; y += TILE) for (let x = 0; x < W; x += TILE) g.drawImage(tile, x, y, TILE, TILE);
 
-  // цветы и деревья
   for (const o of deco) {
     const sy = Math.round(carY - (o.wy - d));
     if (sy < -40 || sy > H + 40) continue;
@@ -325,7 +332,6 @@ function render(alpha) {
     }
   }
 
-  // обочина и дорога
   g.fillStyle = '#b9a98a'; g.fillRect(roadL - 9, 0, roadW + 18, H);
   g.fillStyle = '#4b4b5a'; g.fillRect(roadL, 0, roadW, H);
   g.fillStyle = '#f4f4f4'; g.fillRect(roadL + 3, 0, 4, H); g.fillRect(roadL + roadW - 7, 0, 4, H);
@@ -333,7 +339,6 @@ function render(alpha) {
   const off = Math.round(d) % 90;
   for (let y = off - 90; y < H; y += 90) g.fillRect(Math.round(W / 2) - 3, y, 6, 44);
 
-  // финиш
   const fy = Math.round(carY - (TOTAL - d));
   if (fy > -80 && fy < H + 80) {
     const n = 14, cs = Math.floor(roadW / n), x0 = Math.round(W / 2 - cs * n / 2);
@@ -345,7 +350,6 @@ function render(alpha) {
     g.fillText('ФИНИШ', W / 2, fy - cs - 14);
   }
 
-  // конусы и подарки
   for (const o of objs) {
     const sy = carY - (o.wy - d);
     if (sy < -50 || sy > H + 50) continue;
@@ -354,12 +358,10 @@ function render(alpha) {
     else if (!o.hit || o.age < 1.5) drawCone(sx, sy, o);
   }
 
-  // машина: дрожит от удара и на траве
   const grass = clamp((Math.abs(cxo) + carW / 2 - roadW / 2) / (carW * 0.7), 0, 1);
   const buzz = (shakeT > 0 ? 3 * shakeT / 0.3 : 0) + grass * 1.2;
   drawCar(cx + Math.sin(simTime * 90) * buzz, carY + Math.cos(simTime * 77) * buzz * 0.6, ya);
 
-  // панель прогресса
   const p = clamp(d / TOTAL, 0, 1) * 100;
   document.getElementById('prog').style.width = p + '%';
   document.getElementById('carIcon').style.left = p + '%';
@@ -383,7 +385,7 @@ function rain(n) {
       rot: Math.random() * 6, vr: (Math.random() - .5) * .3, wob: Math.random() * 6, life: 1.2 });
   }
 }
-function drawParts(k) {   // k = сколько «кадров по 1/60 с» прошло: движение не зависит от частоты экрана
+function drawParts(k) {
   f.clearRect(0, 0, W, H);
   for (const p of parts) {
     p.vy += 0.22 * k; p.vx *= Math.pow(0.985, k); p.vy *= Math.pow(0.995, k); p.wob += 0.1 * k;
@@ -397,7 +399,6 @@ function drawParts(k) {   // k = сколько «кадров по 1/60 с» п
   parts = parts.filter(p => p.life > 0 && p.y < H + 30);
 }
 
-/* ====== главный цикл: фиксированный шаг физики + плавная отрисовка ====== */
 let last = performance.now(), acc = 0;
 function loop(now) {
   const frame = Math.min((now - last) / 1000, 0.1); last = now;
@@ -414,7 +415,6 @@ function loop(now) {
   requestAnimationFrame(loop);
 }
 
-/* ====== этапы ====== */
 function startGame() {
   reset(); state = 'play';
   document.body.classList.add('playing');
