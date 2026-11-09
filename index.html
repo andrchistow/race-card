@@ -39,8 +39,19 @@
   #card.show .panel { animation: pop .8s cubic-bezier(.2,1.4,.4,1) forwards; }
   @keyframes pop { to { transform: rotate(-1deg) scale(1); opacity: 1; } }
   #card .small { font-family: "Caveat", cursive; font-size: 24px; color: var(--pop); }
-  #card h1 { font-family: "Caveat", cursive; font-weight: 700; font-size: clamp(34px, 9vw, 48px); line-height: .95;
-             background: linear-gradient(90deg, #ff3d6e, #ff9a3d, #b24dff); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  #card h1 { 
+  font-family: "Caveat", cursive; 
+  font-weight: 700; 
+  font-size: clamp(32px, 8.5vw, 44px); 
+  line-height: 1.15; 
+  padding: 0 14px; 
+  background: linear-gradient(90deg, #ff3d6e, #ff9a3d, #b24dff); 
+  -webkit-background-clip: text; 
+  background-clip: text; 
+  color: transparent; 
+
+  }
+
   #card .sign { font-family: "Caveat", cursive; font-size: 26px; color: var(--pop); }
   #card .score { font-size: 14px; opacity: .75; font-weight: 700; }
   .btn.ghost { background: transparent; color: var(--ink); border: 2px solid #d9b9a8; box-shadow: none; padding: 7px 20px; font-size: 14px; }
