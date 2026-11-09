@@ -69,10 +69,10 @@
   <div class="overlay hide" id="card">
     <div class="panel">
       <div class="small">ты доехала до финиша!</div>
-      <h1>С днём рождения, ИМЯ!</h1>
-      <p>Тут твой личный текст: пара тёплых слов и одна общая шутка.</p>
+      <h1>С днём рождения, Аня!</h1>
+      <p>Ну шо, чемпионка, с Днём Рождения тебя!!!).</p>
       <div class="score" id="score"></div>
-      <div class="sign">— твоё имя</div>
+      <div class="sign">— Аня</div>
       <button class="btn ghost" id="again">проехать ещё раз</button>
     </div>
   </div>
@@ -439,6 +439,7 @@ document.getElementById('again').addEventListener('click', startGame);
 resize(); addEventListener('resize', resize);
 reset();
 requestAnimationFrame(loop);
+window.addEventListener('contextmenu', e => e.preventDefault());
 </script>
 </body>
 </html>
