@@ -24,78 +24,46 @@
   .bar .flag { position: absolute; top: -13px; right: -6px; font-size: 22px; }
   .gifts { color: #fff; font-weight: 800; font-size: 20px; background: rgba(0,0,0,.3); padding: 4px 12px; border-radius: 99px; }
 
-  /* Эффект взрыва на финише */
-  #boom-flash {
-    position: fixed; inset: 0; z-index: 25; pointer-events: none; opacity: 0;
-    background: radial-gradient(circle, #fff 10%, #ff4d00 60%, #000 100%);
-    mix-blend-mode: screen; transition: opacity .15s ease-out;
-  }
-  #boom-flash.bang { opacity: 1; animation: flashAnim .7s forwards; }
-  @keyframes flashAnim {
-    0% { opacity: 1; transform: scale(0.8); }
-    50% { opacity: 0.9; transform: scale(1.1); }
-    100% { opacity: 0; transform: scale(1.3); }
-  }
-
-  .cringe-emoji {
-    position: fixed; z-index: 26; pointer-events: none; font-size: 48px;
-    animation: emojiFly .85s cubic-bezier(.1,.8,.2,1) forwards;
-  }
-  @keyframes emojiFly {
-    0% { transform: translate(-50%, -50%) scale(0.2) rotate(0deg); opacity: 1; }
-    100% { transform: translate(var(--tx), var(--ty)) scale(var(--sc)) rotate(var(--rot)); opacity: 0; }
-  }
-
   /* стартовое окно и окно с поздравлением */
   .overlay { position: fixed; inset: 0; z-index: 10; display: flex; align-items: center; justify-content: center; background: rgba(43,16,85,.65); transition: opacity .4s; padding: 14px; overflow-y: auto; }
   .overlay.hide { opacity: 0; pointer-events: none; }
-  .panel { 
-    background: var(--paper); color: var(--ink); border-radius: 18px; padding: 20px 18px; text-align: center; 
-    width: min(90vw, 380px); max-height: 94vh; display: flex; flex-direction: column; align-items: center; gap: 8px; 
-    box-shadow: 0 22px 40px rgba(0,0,0,.4); border: 3px dashed #f2b8a2; outline: 8px solid var(--paper); outline-offset: -12px; 
-  }
+  .panel { background: var(--paper); color: var(--ink); border-radius: 18px; padding: 22px 20px; text-align: center; width: min(90vw, 380px); max-height: 94vh;
+           display: flex; flex-direction: column; align-items: center; gap: 10px; box-shadow: 0 22px 40px rgba(0,0,0,.4);
+           border: 3px dashed #f2b8a2; outline: 8px solid var(--paper); outline-offset: -12px; }
   .panel h2 { font-family: "Caveat", cursive; font-size: 40px; line-height: 1; color: var(--pop); }
-  .panel p { font-size: 16px; line-height: 1.35; max-width: 28ch; }
+  .panel p { font-size: 16px; line-height: 1.4; max-width: 28ch; }
   .btn { background: var(--pop); color: #fff; border: 0; border-radius: 99px; padding: 12px 28px; font: 800 17px "Nunito", sans-serif; cursor: pointer; box-shadow: 0 5px 0 #c42a52; }
   .btn:active { transform: translateY(3px); box-shadow: 0 2px 0 #c42a52; }
 
   #card .panel { transform: rotate(-3deg) scale(.5); opacity: 0; }
   #card.show .panel { animation: pop .8s cubic-bezier(.2,1.4,.4,1) forwards; }
   @keyframes pop { to { transform: rotate(-1deg) scale(1); opacity: 1; } }
-  #card .small { font-family: "Caveat", cursive; font-size: 22px; color: var(--pop); }
-  #card h1 { font-family: "Caveat", cursive; font-weight: 700; font-size: clamp(32px, 8.5vw, 44px); line-height: .95;
+  #card .small { font-family: "Caveat", cursive; font-size: 24px; color: var(--pop); }
+  #card h1 { font-family: "Caveat", cursive; font-weight: 700; font-size: clamp(34px, 9vw, 48px); line-height: .95;
              background: linear-gradient(90deg, #ff3d6e, #ff9a3d, #b24dff); -webkit-background-clip: text; background-clip: text; color: transparent; }
   #card .sign { font-family: "Caveat", cursive; font-size: 26px; color: var(--pop); }
-  #card .score { font-size: 14px; opacity: .85; font-weight: 700; color: #5a2775; }
+  #card .score { font-size: 14px; opacity: .75; font-weight: 700; }
   .btn.ghost { background: transparent; color: var(--ink); border: 2px solid #d9b9a8; box-shadow: none; padding: 7px 20px; font-size: 14px; }
 
-  /* Картинка без белой рамки (только пленочный ретро-эффект) */
-  .vintage-photo-box {
+  /* Рамка и парение картинки открытки */
+  .gift-art-box {
     position: relative;
-    overflow: hidden;
+    width: min(74vw, 250px);
     border-radius: 14px;
-    width: min(76vw, 250px);
-    box-shadow: 0 12px 28px rgba(0,0,0,0.35);
-    transform: rotate(1.5deg);
-    transition: transform .3s;
+    padding: 5px;
+    background: linear-gradient(135deg, #ff3d6e, #ffc857, #ff3d6e);
+    box-shadow: 0 10px 24px rgba(255, 61, 110, 0.4);
+    animation: floatArt 3s ease-in-out infinite alternate;
   }
-  .vintage-photo-box:hover {
-    transform: rotate(0deg) scale(1.02);
+  @keyframes floatArt {
+    0% { transform: translateY(0px) rotate(-1deg); }
+    100% { transform: translateY(-6px) rotate(1.5deg); }
   }
-  .vintage-photo-box img {
+  .gift-art-box img {
     display: block;
     width: 100%;
     height: auto;
-    /* Пленочный фильтр Polaroid */
-    filter: sepia(0.24) contrast(1.18) saturate(1.25) brightness(1.03);
-  }
-  /* Виньетка и блик */
-  .vintage-photo-box::after {
-    content: ""; position: absolute; inset: 0;
-    background: radial-gradient(circle, rgba(255,255,255,0.1) 35%, rgba(0,0,0,0.4) 100%),
-                linear-gradient(135deg, rgba(255,255,255,0.2) 0%, transparent 45%);
-    pointer-events: none;
-    border-radius: 14px;
+    border-radius: 10px;
   }
 </style>
 </head>
@@ -103,10 +71,6 @@
 
   <canvas id="game"></canvas>
   <canvas id="fx"></canvas>
-  <div id="boom-flash"></div>
-
-  <!-- Аудио для финиша -->
-  <audio id="finishMusic" src="music.mp3" preload="auto"></audio>
 
   <div class="hud">
     <div class="bar"><i id="prog"></i><span class="car" id="carIcon" style="display:inline-block; transform:translateX(-50%) scaleX(-1);">🏎️</span><span class="flag">🏁</span></div>
@@ -127,9 +91,9 @@
     <div class="panel">
       <div class="small">ты доехала до финиша!</div>
       
-      <!-- Картинка только с эффектом (без белой рамки) -->
-      <div class="vintage-photo-box">
-        <img src="card.jpg" alt="Аня 18 лет">
+      <!-- Картинка-открытка -->
+      <div class="gift-art-box">
+        <img src="card.jpg" alt="Открытка для Ани">
       </div>
 
       <h1>С днём рождения, Аня!</h1>
@@ -142,20 +106,19 @@
 
 <script>
 /* ====== настройки ====== */
-const TOTAL = 9500;
-const SPEED = 380;
+const TOTAL = 9500;        // длина дороги
+const SPEED = 380;         // крейсерская скорость
 const CAR_COLOR = '#ff3d6e';
 
+/* ====== сбалансированная физика ====== */
 const ACCEL = 240;
 const DRAG = 600;
 const FINISH_BRAKE = 260;
-const STEER = 1100;
-const LAT_DAMP = 5.0;
-const MAX_VX = 275;
+const STEER = 1100;        // сбалансированная чувствительность руля
+const LAT_DAMP = 5.0;      // демпфирование заноса
+const MAX_VX = 275;        // лимит боковой скорости
 const GRASS_SLOW = 0.5;
 const STEP = 1 / 120;
-
-const music = document.getElementById('finishMusic');
 
 if (!CanvasRenderingContext2D.prototype.roundRect) {
   CanvasRenderingContext2D.prototype.roundRect = function (x, y, w, h, r) {
@@ -219,14 +182,11 @@ let state = 'ready';
 let dist, v, cxo, vx, yaw, shakeT, gifts, objs, deco;
 let pDist, pX, pYaw;
 let steer = 0, simTime = 0;
-let finishExploded = false;
-let carSpin = 0;
 const keys = {};
 const clamp = (a, lo, hi) => Math.max(lo, Math.min(hi, a));
 
 function reset() {
   dist = 0; v = 0; cxo = 0; vx = 0; yaw = 0; shakeT = 0; gifts = 0; simTime = 0;
-  finishExploded = false; carSpin = 0;
   pDist = dist; pX = cxo; pYaw = yaw;
   document.getElementById('giftCount').textContent = 0;
   const rnd = mulberry((Math.random() * 1e9) | 0);
@@ -243,6 +203,7 @@ function reset() {
   }
 }
 
+/* Управление */
 cv.addEventListener('pointerdown', e => { steer = e.clientX < W / 2 ? -1 : 1; cv.setPointerCapture(e.pointerId); });
 cv.addEventListener('pointermove', e => { if (e.buttons || e.pointerType === 'touch') steer = e.clientX < W / 2 ? -1 : 1; });
 cv.addEventListener('pointerup',     () => steer = 0);
@@ -254,33 +215,6 @@ function steerInput() {
   if (keys['arrowleft'] || keys['a'] || keys['ф']) s = -1;
   if (keys['arrowright'] || keys['d'] || keys['в']) s = 1;
   return s;
-}
-
-function triggerCringeExplosion() {
-  finishExploded = true;
-  shakeT = 1.2;
-  const flash = document.getElementById('boom-flash');
-  flash.classList.remove('bang');
-  void flash.offsetWidth;
-  flash.classList.add('bang');
-
-  const emojis = ['💥', '🔥', '🤯', '✨', '💀', '🎉', '🏎️', '💨'];
-  for (let i = 0; i < 24; i++) {
-    const el = document.createElement('div');
-    el.className = 'cringe-emoji';
-    el.textContent = emojis[Math.floor(Math.random() * emojis.length)];
-    el.style.left = (W / 2) + 'px';
-    el.style.top = (carY) + 'px';
-    const angle = Math.random() * Math.PI * 2;
-    const dist = 120 + Math.random() * 260;
-    el.style.setProperty('--tx', `${Math.cos(angle) * dist}px`);
-    el.style.setProperty('--ty', `${Math.sin(angle) * dist - 80}px`);
-    el.style.setProperty('--sc', (1.4 + Math.random() * 1.8).toFixed(2));
-    el.style.setProperty('--rot', `${(Math.random() - 0.5) * 720}deg`);
-    document.body.appendChild(el);
-    setTimeout(() => el.remove(), 900);
-  }
-  burstAt(W / 2, carY, 90, 16, 8);
 }
 
 function update(dt) {
@@ -306,10 +240,6 @@ function update(dt) {
 
   const yawTarget = clamp(vx / Math.max(v, 120) * 0.8, -0.35, 0.35);
   yaw += (yawTarget - yaw) * Math.min(1, dt * 10);
-
-  if (finishExploded) {
-    carSpin += dt * 18;
-  }
 
   dist += v * dt;
   if (shakeT > 0) shakeT -= dt;
@@ -343,22 +273,14 @@ function update(dt) {
     }
   }
 
-  if (state === 'play' && dist >= TOTAL) {
-    state = 'finishing';
-    triggerCringeExplosion();
-    // Старт музыки при пересечении финиша
-    if (music) {
-      music.currentTime = 0;
-      music.play().catch(() => {});
-    }
-  }
+  if (state === 'play' && dist >= TOTAL) state = 'finishing';
   if (state === 'finishing' && v < 4) finish();
 }
 
 function rr(x, y, w, h, r) { g.beginPath(); g.roundRect(x, y, w, h, r); g.fill(); }
 
 function drawCar(x, y, tilt) {
-  g.save(); g.translate(x, y); g.rotate(tilt + carSpin);
+  g.save(); g.translate(x, y); g.rotate(tilt);
   const w = carW, h = carH;
   g.fillStyle = 'rgba(0,0,0,.28)'; rr(-w / 2 + 3, -h / 2 + 6, w, h, w * .3);
   g.fillStyle = '#1b1b1b';
@@ -375,7 +297,7 @@ function drawCone(x, y, o) {
   g.save(); g.translate(x, y); g.rotate(o.rot);
   if (o.hit) g.globalAlpha = clamp(1 - (o.age - 0.9) / 0.6, 0, 1);
   g.fillStyle = 'rgba(0,0,0,.2)'; g.beginPath(); g.ellipse(3, 5, 13, 9, 0, 0, 6.3); g.fill();
-  g.fillStyle = '#ff7a1a'; g.beginPath(); g.moveTo(0, -18); g.lineTo(12, 12); g.closePath(); g.fill();
+  g.fillStyle = '#ff7a1a'; g.beginPath(); g.moveTo(0, -18); g.lineTo(12, 12); g.lineTo(-12, 12); g.closePath(); g.fill();
   g.fillStyle = '#fff'; g.fillRect(-7, -2, 14, 5);
   g.fillStyle = '#e65f00'; g.fillRect(-14, 10, 28, 5);
   g.restore();
@@ -437,7 +359,7 @@ function render(alpha) {
   }
 
   const grass = clamp((Math.abs(cxo) + carW / 2 - roadW / 2) / (carW * 0.7), 0, 1);
-  const buzz = (shakeT > 0 ? (finishExploded ? 12 : 3) * shakeT : 0) + grass * 1.2;
+  const buzz = (shakeT > 0 ? 3 * shakeT / 0.3 : 0) + grass * 1.2;
   drawCar(cx + Math.sin(simTime * 90) * buzz, carY + Math.cos(simTime * 77) * buzz * 0.6, ya);
 
   const p = clamp(d / TOTAL, 0, 1) * 100;
@@ -495,33 +417,22 @@ function loop(now) {
 
 function startGame() {
   reset(); state = 'play';
-  // Разблокировка воспроизведения звука на смартфонах по тапу пользователя
-  if (music) {
-    music.pause();
-    music.currentTime = 0;
-    music.load();
-  }
   document.body.classList.add('playing');
   document.getElementById('start').classList.add('hide');
   document.getElementById('card').classList.add('hide');
   document.getElementById('card').classList.remove('show');
 }
-
 function finish() {
   if (state === 'done') return;
   state = 'done';
   document.body.classList.remove('playing');
-  document.getElementById('score').textContent = gifts ? 'по дороге собрано чупапи муняшек: ' + gifts + ' 🎁' : 'по дороге собрано 0 чупапи муняшек 🥺';
-  
-  setTimeout(() => {
-    const card = document.getElementById('card');
-    card.classList.remove('hide'); card.classList.add('show');
-    burstAt(W / 2, H / 2, 200, 14, 6);
-    setTimeout(() => burstAt(W / 2, H / 2, 120, 10, 5), 400);
-    setTimeout(() => rain(120), 800);
-  }, 450);
+  document.getElementById('score').textContent = gifts ? 'по дороге собрано подарков: ' + gifts + ' 🎁' : '';
+  const card = document.getElementById('card');
+  card.classList.remove('hide'); card.classList.add('show');
+  burstAt(W / 2, H / 2, 180, 12, 5);
+  setTimeout(() => burstAt(W / 2, H / 2, 100, 9, 4), 450);
+  setTimeout(() => rain(110), 900);
 }
-
 document.getElementById('go').addEventListener('click', startGame);
 document.getElementById('again').addEventListener('click', startGame);
 
